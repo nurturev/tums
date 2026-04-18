@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI
 
 app = FastAPI(title="tums")
@@ -16,3 +18,16 @@ def readyz():
 @app.get("/hello")
 def hello():
     return {"message": "world"}
+
+
+@app.get("/env")
+def get_env():
+    return {
+        "ENVIRONMENT": os.environ.get("ENVIRONMENT"),
+        "LOG_LEVEL": os.environ.get("LOG_LEVEL"),
+    }
+
+
+@app.get("/secret")
+def get_secret():
+    return {"MY_SECRET": os.environ.get("MY_SECRET")}
